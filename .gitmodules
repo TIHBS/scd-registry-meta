@@ -1,0 +1,12 @@
+[submodule "external/decentralised-scd-registry"]
+	path = external/decentralised-scd-registry
+	url = git@github.com:GarondEisenfaust/decentralised-scd-registry.git
+[submodule "external/decentralised-scd-registry-frontend"]
+	path = external/decentralised-scd-registry-frontend
+	url = git@github.com:GarondEisenfaust/decentralised-scd-registry-frontend.git
+[submodule "external/external-search-provider"]
+	path = external/external-search-provider
+	url = git@github.com:GarondEisenfaust/external-search-provider.git
+[submodule "external/webserver-storage"]
+	path = external/webserver-storage
+	url = git@github.com:GarondEisenfaust/webserver-storage.git
