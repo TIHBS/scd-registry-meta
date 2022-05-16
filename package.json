@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "bee-factory start 1.5.1",
+    "start": "ts-node src/main.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/GarondEisenfaust/decentralised-scd-registry-meta#readme",
   "devDependencies": {
-    "@ethersphere/bee-factory": "^0.4.0"
+    "@ethersphere/bee-factory": "^0.4.0",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.4"
   }
 }
