@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "bee-factory start 1.5.1",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/GarondEisenfaust/decentralised-scd-registry-meta/issues"
   },
-  "homepage": "https://github.com/GarondEisenfaust/decentralised-scd-registry-meta#readme"
+  "homepage": "https://github.com/GarondEisenfaust/decentralised-scd-registry-meta#readme",
+  "devDependencies": {
+    "@ethersphere/bee-factory": "^0.3.0"
+  }
 }
