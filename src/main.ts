@@ -65,11 +65,11 @@ async function main() {
 
   // Starts the frontend
   let frontendResult: Result;
-  const toWaitForFrontend = "Access the frontend at: ";
+  const toWaitForFrontend = "The website can be found at ";
   try {
     spinner.start(" Starting the frontend");
     frontendResult = await executeCommand(
-      `docker-compose -f ${frontendComposeFile} up`,
+      `docker-compose -f ${frontendComposeFile} up decentralised-scd-registry-swarm`,
       undefined,
       toWaitForFrontend
     );
@@ -81,10 +81,12 @@ async function main() {
   }
 
   // Parses the frontend address out of the log
-  const frontendAddress = frontendResult!.line?.substring(
+  let frontendAddress = frontendResult!.line?.substring(
     toWaitForFrontend.length,
     frontendResult!.line.length
   );
+  // Replaces the docker host with the host ip
+  frontendAddress = frontendAddress?.replace(hostIpDocker, hostIp);
 
   const info = {
     registryAddress: registryAddress,
@@ -101,7 +103,8 @@ async function main() {
     REGISTRY_ADDRESS: registryAddress,
     ETHEREUM_NETWORK_URL: `http://${hostIpDocker}:8545`,
     ELASTICSEARCH_URL: `http://${hostIpDocker}:9200`,
-    SWARM_URL: `http://${hostIpDocker}:1633`,
+    SWARM_API: `http://${hostIpDocker}:1633`,
+    SWARM_DEBUG: `http://${hostIpDocker}:1635`,
   };
 
   // Starts the remaining services
