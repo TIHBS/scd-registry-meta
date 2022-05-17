@@ -1,5 +1,8 @@
+#! /bin/node
+
 import { executeCommand } from "./ExecuteCommand";
 import * as child_process from "child_process";
+import { createExpressServer } from "./CreateExpressServer";
 
 const composeFiles = [
   "external/external-search-provider/docker-compose.yml",
@@ -15,6 +18,7 @@ const hostIp = "172.17.0.1";
 
 async function main() {
   // Starts swarm
+  console.log("Starting local Bee cluster");
   childProcesses.push(
     (
       await executeCommand(
@@ -26,6 +30,7 @@ async function main() {
   );
 
   // Starts ganache with the registry contract
+  console.log("Starting Registry contract");
   const toWaitFor = "DEPLOYED REGISTRY CONTRACT AT: ";
   const registryContractResult = await executeCommand(
     `docker-compose -f ${registryComposeFile} up`,
@@ -49,6 +54,7 @@ async function main() {
 
   // Starts the remaining services
   for (const filePath of composeFiles) {
+    console.log(`Running docker-compose with: ${filePath}`);
     childProcesses.push(
       (await executeCommand(`docker-compose -f ${filePath} up`, environment))
         .process
@@ -65,6 +71,13 @@ async function main() {
       });
     })
   );
+
+  const info = {
+    registryAddress: registryAddress,
+  };
+
+  const server = createExpressServer(info);
+
   return finished;
 }
 

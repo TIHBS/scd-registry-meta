@@ -10,3 +10,6 @@
 [submodule "external/webserver-storage"]
 	path = external/webserver-storage
 	url = git@github.com:GarondEisenfaust/webserver-storage.git
+[submodule "external/decentralised-scd-registry-common"]
+	path = external/decentralised-scd-registry-common
+	url = git@github.com:GarondEisenfaust/decentralised-scd-registry-common.git
