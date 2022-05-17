@@ -100,7 +100,7 @@ async function main() {
   const environment = {
     REGISTRY_ADDRESS: registryAddress,
     ETHEREUM_NETWORK_URL: `http://${hostIpDocker}:8545`,
-    ELASTICSEARCH_URL: `http://elasticsearch:9200`,
+    ELASTICSEARCH_URL: `http://${hostIpDocker}:9200`,
     SWARM_URL: `http://${hostIpDocker}:1633`,
   };
 
