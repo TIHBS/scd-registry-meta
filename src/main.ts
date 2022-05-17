@@ -148,6 +148,7 @@ async function main() {
 
 // Kills all subprocesses on receiving a "SIGINT"
 process.on("SIGINT", function () {
+  spinner.stop();
   spinner.clear();
   console.log("Caught interrupt signal");
   childProcesses.forEach((process) => process.kill("SIGINT"));
