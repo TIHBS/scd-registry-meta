@@ -80,7 +80,7 @@ async function main() {
     return;
   }
 
-  // Parses the registry address out of the log
+  // Parses the frontend address out of the log
   const frontendAddress = frontendResult!.line?.substring(
     toWaitForFrontend.length,
     frontendResult!.line.length
