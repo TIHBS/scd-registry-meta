@@ -8,11 +8,13 @@ import ora from "ora";
 const composeFiles = [
   "external/external-search-provider/docker-compose.yml",
   "external/webserver-storage/docker-compose.yml",
-  "external/decentralised-scd-registry-frontend/docker-compose.yml",
 ];
 
 const registryComposeFile =
   "external/decentralised-scd-registry/docker-compose.yml";
+
+const frontendComposeFile =
+  "external/decentralised-scd-registry-frontend/docker-compose.yml";
 
 const childProcesses: child_process.ChildProcess[] = [];
 const hostIpDocker = "172.17.0.1";
@@ -61,12 +63,36 @@ async function main() {
     registryContractResult!.line.length
   );
 
+  // Starts the frontend
+  let frontendResult: Result;
+  const toWaitForFrontend = "Access the frontend at: ";
+  try {
+    spinner.start(" Starting the frontend");
+    frontendResult = await executeCommand(
+      `docker-compose -f ${frontendComposeFile} up`,
+      undefined,
+      toWaitForFrontend
+    );
+    childProcesses.push(frontendResult.process);
+    spinner.succeed(" Started the frontend");
+  } catch (err) {
+    spinner.fail(" Failed to start the frontend");
+    return;
+  }
+
+  // Parses the registry address out of the log
+  const frontendAddress = frontendResult!.line?.substring(
+    toWaitForFrontend.length,
+    frontendResult!.line.length
+  );
+
   const info = {
     registryAddress: registryAddress,
     ethereumNetworkUrl: `http://${hostIp}:8545`,
     ethereumNetworkId: 57771,
     webserverStorage: `http://${hostIp}:49160`,
     externalSearchProvider: `http://${hostIp}:3000`,
+    frontendAddress: frontendAddress,
     swarmAPi: `http://${hostIp}:1633`,
     swarmDebug: `http://${hostIp}:1635`,
   };
@@ -74,7 +100,7 @@ async function main() {
   const environment = {
     REGISTRY_ADDRESS: registryAddress,
     ETHEREUM_NETWORK_URL: `http://${hostIpDocker}:8545`,
-    ELASTICSEARCH_URL: `http://${hostIpDocker}:9200`,
+    ELASTICSEARCH_URL: `http://elasticsearch:9200`,
     SWARM_URL: `http://${hostIpDocker}:1633`,
   };
 
