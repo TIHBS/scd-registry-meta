@@ -14,7 +14,8 @@ const registryComposeFile =
   "external/decentralised-scd-registry/docker-compose.yml";
 
 const childProcesses: child_process.ChildProcess[] = [];
-const hostIp = "172.17.0.1";
+const hostIpDocker = "172.17.0.1";
+const hostIp = "localhost";
 
 async function main() {
   // Starts swarm
@@ -45,11 +46,21 @@ async function main() {
     registryContractResult.line.length
   );
 
+  const info = {
+    registryAddress: registryAddress,
+    ethereumNetworkUrl: `http://${hostIp}:8545`,
+    ethereumNetworkId: 57771,
+    webserverStorage: `http://${hostIp}:49160`,
+    externalSearchProvider: `http://${hostIp}:3000`,
+    swarmAPi: `http://${hostIp}:1633`,
+    swarmDebug: `http://${hostIp}:1635`,
+  };
+
   const environment = {
     REGISTRY_ADDRESS: registryAddress,
-    ETHEREUM_NETWORK_URL: `http://${hostIp}:8545`,
-    ELASTICSEARCH_URL: `http://${hostIp}:9200`,
-    SWARM_URL: `http://${hostIp}:1633`,
+    ETHEREUM_NETWORK_URL: `http://${hostIpDocker}:8545`,
+    ELASTICSEARCH_URL: `http://${hostIpDocker}:9200`,
+    SWARM_URL: `http://${hostIpDocker}:1633`,
   };
 
   // Starts the remaining services
@@ -71,10 +82,6 @@ async function main() {
       });
     })
   );
-
-  const info = {
-    registryAddress: registryAddress,
-  };
 
   const server = createExpressServer(info);
 

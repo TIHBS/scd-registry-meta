@@ -1,10 +1,10 @@
 import express from "express";
 import cors from "cors";
-import { Info } from "./Info";
+import { SystemInfo } from "./SystemInfo";
 import { capitalizeFirstLetter } from "../external/decentralised-scd-registry-common/src/util/String";
 import package_json from "../package.json";
 
-export function createExpressServer(info: Info, port: number = 7777) {
+export function createExpressServer(info: SystemInfo, port: number = 7777) {
   const app = express().use(
     cors({
       origin: "*",
@@ -12,7 +12,7 @@ export function createExpressServer(info: Info, port: number = 7777) {
   );
 
   app.get("/", async (req, res) => {
-    console.log(`Info request: ${JSON.stringify(info)}`);
+    console.log(`System info request: ${JSON.stringify(info)}`);
     res.send(info);
   });
 
