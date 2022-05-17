@@ -1,6 +1,6 @@
 import * as child_process from "child_process";
 
-interface Result {
+export interface Result {
   process: child_process.ChildProcess;
   line?: string;
 }
@@ -29,7 +29,6 @@ export async function executeCommand(
   return new Promise((resolve, reject) => {
     child.stdout.addListener("data", (chunk) => {
       const log = textdecoder.decode(chunk);
-      console.log(log);
       if (!waitFor) {
         resolve({ process: child });
       }

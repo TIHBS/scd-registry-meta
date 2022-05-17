@@ -4,7 +4,11 @@ import { SystemInfo } from "./SystemInfo";
 import { capitalizeFirstLetter } from "../external/decentralised-scd-registry-common/src/util/String";
 import package_json from "../package.json";
 
-export function createExpressServer(info: SystemInfo, port: number = 7777) {
+export function createExpressServer(
+  info: SystemInfo,
+  hostIp: string = "localhost",
+  port: number = 7777
+) {
   const app = express().use(
     cors({
       origin: "*",
@@ -18,7 +22,9 @@ export function createExpressServer(info: SystemInfo, port: number = 7777) {
 
   app.listen(port, () => {
     console.log(
-      `${capitalizeFirstLetter(package_json.name)} listening at ${port}`
+      `${capitalizeFirstLetter(
+        package_json.name
+      )} listening at http://${hostIp}:${port}`
     );
   });
 }

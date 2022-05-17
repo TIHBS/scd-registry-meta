@@ -1,8 +1,9 @@
 #! /bin/node
 
-import { executeCommand } from "./ExecuteCommand";
+import { executeCommand, Result } from "./ExecuteCommand";
 import * as child_process from "child_process";
 import { createExpressServer } from "./CreateExpressServer";
+import ora from "ora";
 
 const composeFiles = [
   "external/external-search-provider/docker-compose.yml",
@@ -16,34 +17,48 @@ const registryComposeFile =
 const childProcesses: child_process.ChildProcess[] = [];
 const hostIpDocker = "172.17.0.1";
 const hostIp = "localhost";
+const spinner = ora();
 
 async function main() {
   // Starts swarm
-  console.log("Starting local Bee cluster");
-  childProcesses.push(
-    (
-      await executeCommand(
-        "npx bee-factory start 1.5.1",
-        undefined,
-        "Welcome to Swarm.... Bzzz Bzzzz Bzzzz"
-      )
-    ).process
-  );
+  try {
+    spinner.start(" Starting Bee cluster");
+    childProcesses.push(
+      (
+        await executeCommand(
+          "npx bee-factory start 1.5.1",
+          undefined,
+          "Welcome to Swarm.... Bzzz Bzzzz Bzzzz"
+        )
+      ).process
+    );
+    spinner.succeed(" Started Bee cluster");
+  } catch (err) {
+    spinner.fail(" Failed to start Bee cluster");
+    return;
+  }
 
   // Starts ganache with the registry contract
-  console.log("Starting Registry contract");
+  let registryContractResult: Result;
   const toWaitFor = "DEPLOYED REGISTRY CONTRACT AT: ";
-  const registryContractResult = await executeCommand(
-    `docker-compose -f ${registryComposeFile} up`,
-    undefined,
-    toWaitFor
-  );
-  childProcesses.push(registryContractResult.process);
+  try {
+    spinner.start(" Starting Registry contract");
+    registryContractResult = await executeCommand(
+      `docker-compose -f ${registryComposeFile} up`,
+      undefined,
+      toWaitFor
+    );
+    childProcesses.push(registryContractResult.process);
+    spinner.succeed(" Started Registry contract");
+  } catch (err) {
+    spinner.fail(" Failed to start Registry contract");
+    return;
+  }
 
   // Parses the registry address out of the log
-  const registryAddress = registryContractResult.line?.substring(
+  const registryAddress = registryContractResult!.line?.substring(
     toWaitFor.length,
-    registryContractResult.line.length
+    registryContractResult!.line.length
   );
 
   const info = {
@@ -65,12 +80,29 @@ async function main() {
 
   // Starts the remaining services
   for (const filePath of composeFiles) {
-    console.log(`Running docker-compose with: ${filePath}`);
-    childProcesses.push(
-      (await executeCommand(`docker-compose -f ${filePath} up`, environment))
-        .process
-    );
+    try {
+      spinner.start(` Running docker-compose with: ${filePath}`);
+      childProcesses.push(
+        (await executeCommand(`docker-compose -f ${filePath} up`, environment))
+          .process
+      );
+      spinner.succeed(` Finished running docker-compose with: ${filePath}`);
+    } catch (err) {
+      spinner.fail(` Failed to run docker-compose with ${filePath}`);
+      return;
+    }
   }
+
+  // Listens for logs
+  const textdecoder = new TextDecoder();
+  childProcesses
+    .filter((process) => process.stdout)
+    .forEach((process) =>
+      process.stdout!.addListener("data", (chunk) => {
+        const log = textdecoder.decode(chunk);
+        console.log(log);
+      })
+    );
 
   // Necessary to resolve the promise when the script receives a "SIGINT"
   const finished = Promise.all(
@@ -83,13 +115,14 @@ async function main() {
     })
   );
 
-  const server = createExpressServer(info);
+  const server = createExpressServer(info, hostIp);
 
   return finished;
 }
 
 // Kills all subprocesses on receiving a "SIGINT"
 process.on("SIGINT", function () {
+  spinner.clear();
   console.log("Caught interrupt signal");
   childProcesses.forEach((process) => process.kill("SIGINT"));
 });
@@ -102,4 +135,5 @@ main()
   .catch(() => {
     console.log("Failed to start all processes");
     process.exit(1);
-  });
+  })
+  .finally(() => spinner.clear());
