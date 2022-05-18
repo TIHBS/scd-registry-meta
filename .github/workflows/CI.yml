@@ -1,0 +1,23 @@
+name: CI
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Install npm packages
+        run: npm install
+      - name: "Build containers"
+        run: npm run build-containers
+      - name: "Build the tool"
+        run: npm run build
+      - name: "Start the containers"
+        run: npm start & disown
+      - name: "Run the tests"
+        run: npm test
