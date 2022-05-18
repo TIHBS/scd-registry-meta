@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "node dist/src/main.js",
-    "start:dev": "ts-node src/main.ts",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc",
+    "start:dev": "npx ts-node src/main.ts",
+    "test": "npx ts-mocha --require test/Hooks.ts test/**/*.test.ts",
+    "build": "npx tsc",
     "prebuild": "npm run clean",
-    "clean": "shx rm -rf dist"
+    "clean": "npx shx rm -rf dist"
   },
   "repository": {
     "type": "git",
@@ -22,10 +22,20 @@
   },
   "homepage": "https://github.com/GarondEisenfaust/decentralised-scd-registry-meta#readme",
   "devDependencies": {
+    "@types/chai": "^4.3.1",
+    "@types/chai-as-promised": "^7.1.5",
+    "@types/chai-http": "^4.2.0",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
+    "@types/mocha": "^9.1.1",
     "@types/node": "^17.0.34",
+    "chai": "^4.3.6",
+    "chai-as-promised": "^7.1.1",
+    "chai-http": "^4.3.0",
+    "mocha": "^10.0.0",
+    "node-fetch": "^2.6.7",
     "shx": "^0.3.4",
+    "ts-mocha": "^10.0.0",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.4"
   },
