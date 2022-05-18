@@ -4,6 +4,7 @@ import { executeCommand, Result } from "./ExecuteCommand";
 import * as child_process from "child_process";
 import { createExpressServer } from "./CreateExpressServer";
 import ora from "ora";
+import { SystemInfo } from "./SystemInfo";
 
 const composeFiles = [
   "external/external-search-provider/docker-compose.yml",
@@ -88,13 +89,13 @@ async function main() {
   // Replaces the docker host with the host ip
   frontendAddress = frontendAddress?.replace(hostIpDocker, hostIp);
 
-  const info = {
+  const info: SystemInfo = {
     registryAddress: registryAddress,
     ethereumNetworkUrl: `http://${hostIp}:8545`,
     ethereumNetworkId: 57771,
     webserverStorage: `http://${hostIp}:49160`,
     externalSearchProvider: `http://${hostIp}:3000`,
-    frontendAddress: frontendAddress,
+    frontendUrl: frontendAddress,
     swarmAPi: `http://${hostIp}:1633`,
     swarmDebug: `http://${hostIp}:1635`,
   };
