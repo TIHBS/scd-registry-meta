@@ -1,19 +1,31 @@
+import { Metadata } from "../external/decentralised-scd-registry-common/src/interfaces/Metadata";
 import { SystemInfo } from "../src/SystemInfo";
 import { expect } from "./MochaConfig";
-import { waitUntilEnvironmentStarted } from "./Util";
+import {
+  createRegistryContract,
+  scdToMetadata,
+  waitUntilEnvironmentStarted,
+} from "./Util";
+import * as scd1 from "../external/webserver-storage/public/scd1.json";
+import * as scd2 from "../external/webserver-storage/public/scd2.json";
+import {
+  fromContractType,
+  toContractType,
+} from "../external/decentralised-scd-registry-common/src/Conversion";
+import { SCD } from "../external/decentralised-scd-registry-common/src/interfaces/SCD";
+import fetch from "node-fetch";
 
 describe("Started", () => {
   let fetched;
   let response: SystemInfo;
 
-  before(async function () {
+  beforeEach(async function () {
     [fetched, response] = await waitUntilEnvironmentStarted();
-    console.log(JSON.stringify(response));
   });
 
   after(async function () {});
 
-  it("should start and the system info should contain information", async function () {
+  it("should start the system and the system info should contain information", async function () {
     expect(fetched).to.be.true;
 
     expect(response.ethereumNetworkId).to.equal(57771);
@@ -44,5 +56,45 @@ describe("Started", () => {
       const index = response.registryAddress.search(/0x[A-Z0-9]*/);
       expect(index).to.equal(0);
     }
+  });
+
+  it("should store scd1.json and retieve it from the contract itself", async function () {
+    const expected = await scdToMetadata(
+      scd1 as SCD,
+      "http://localhost:49160/scd1.json"
+    );
+    const expectedForTheContract = toContractType(expected);
+    const registry = createRegistryContract(response.registryAddress);
+    await registry.store(expectedForTheContract);
+    const result = fromContractType(
+      await (
+        await registry.retrieveById(0)
+      ).metadata
+    );
+
+    expect(result).to.deep.equal(expected);
+    const scd = await (await fetch(result.url)).json();
+
+    expect(scd).to.deep.equal(scd1["default"]);
+  });
+
+  it("should store scd2.json and retieve it from the contract itself", async function () {
+    const expected = await scdToMetadata(
+      scd2 as SCD,
+      "http://localhost:49160/scd2.json"
+    );
+    const expectedForTheContract = toContractType(expected);
+    const registry = createRegistryContract(response.registryAddress);
+    await registry.store(expectedForTheContract);
+    const result = fromContractType(
+      await (
+        await registry.retrieveById(1)
+      ).metadata
+    );
+
+    expect(result).to.deep.equal(expected);
+    const scd = await (await fetch(result.url)).json();
+
+    expect(scd).to.deep.equal(scd2["default"]);
   });
 });
