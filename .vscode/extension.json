@@ -1,0 +1,7 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "hbenl.vscode-mocha-test-adapter",
+    "hbenl.vscode-test-explorer"
+  ]
+}
