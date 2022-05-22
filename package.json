@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node dist/src/main.js",
     "start:dev": "npx ts-node src/main.ts",
-    "test": "npx ts-mocha test/**/*.test.ts",
+    "test": "npx ts-mocha tests/**/*.test.ts",
     "build": "npx tsc",
     "build-containers": "npx ts-node scripts/build-containers.ts",
     "prebuild": "npm run clean",
@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/GarondEisenfaust/decentralised-scd-registry-meta#readme",
   "devDependencies": {
+    "@synthetixio/synpress": "^1.2.0",
     "@types/app-root-dir": "^0.1.1",
     "@types/chai": "^4.3.1",
     "@types/chai-as-promised": "^7.1.5",

@@ -2,7 +2,7 @@ import { SystemInfo } from "../src/SystemInfo";
 import fetch from "node-fetch";
 import { Registry__factory } from "../external/decentralised-scd-registry-common/src/wrappers/factories/Registry__factory";
 import testWallets from "../external/decentralised-scd-registry/src/util/wallets";
-import { ethers, getDefaultProvider, providers, Signer } from "ethers";
+import { ethers, getDefaultProvider, Signer } from "ethers";
 import { Registry } from "../external/decentralised-scd-registry-common/src/wrappers/Registry";
 import { Metadata } from "../external/decentralised-scd-registry-common/src/interfaces/Metadata";
 import { SCD } from "../external/decentralised-scd-registry-common/src/interfaces/SCD";

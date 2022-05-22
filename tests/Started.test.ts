@@ -1,4 +1,3 @@
-import { Metadata } from "../external/decentralised-scd-registry-common/src/interfaces/Metadata";
 import { SystemInfo } from "../src/SystemInfo";
 import { expect } from "./MochaConfig";
 import {
