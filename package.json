@@ -10,7 +10,9 @@
     "build": "npx tsc",
     "build-containers": "npx ts-node scripts/build-containers.ts",
     "prebuild": "npm run clean",
-    "clean": "npx shx rm -rf dist"
+    "clean": "npx shx rm -rf dist",
+    "test:e2e": "NETWORK_NAME=localhost PRIVATE_KEY=0x534af078a10af8335f6fbab8bfbd9bb13ed30fbb31f73f31c2070cfc5a4ad666 synpress run --configFile=synpress.json ",
+    "test:e2e:open": "NETWORK_NAME=localhost PRIVATE_KEY=0x534af078a10af8335f6fbab8bfbd9bb13ed30fbb31f73f31c2070cfc5a4ad666 synpress open --configFile=synpress.json "
   },
   "repository": {
     "type": "git",
@@ -23,6 +25,7 @@
   },
   "homepage": "https://github.com/GarondEisenfaust/decentralised-scd-registry-meta#readme",
   "devDependencies": {
+    "@synthetixio/synpress": "^1.2.0",
     "@types/app-root-dir": "^0.1.1",
     "@types/chai": "^4.3.1",
     "@types/chai-as-promised": "^7.1.5",
