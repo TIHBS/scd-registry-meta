@@ -19,7 +19,5 @@ jobs:
         run: npm run build-containers
       - name: "Build the tool"
         run: npm run build
-      - name: "Start the containers"
-        run: npm start & disown
       - name: "Run the tests"
         run: npm test
