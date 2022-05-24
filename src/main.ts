@@ -150,13 +150,17 @@ async function main() {
   return finished;
 }
 
-// Kills all subprocesses on receiving a "SIGINT"
-process.on("SIGINT", function () {
+function stop(signal: NodeJS.Signals) {
   spinner.stop();
   spinner.clear();
   console.log("Caught interrupt signal");
-  childProcesses.forEach((process) => process.kill("SIGINT"));
-});
+  childProcesses.forEach((process) => process.kill(signal));
+}
+
+// Kills all subprocesses on receiving a kill
+process.on("SIGINT", () => stop("SIGINT"));
+process.on("SIGKILL", () => stop("SIGKILL"));
+process.on("SIGTERM", () => stop("SIGTERM"));
 
 main()
   .then(() => {
