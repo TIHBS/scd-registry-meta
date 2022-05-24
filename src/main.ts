@@ -155,6 +155,7 @@ function stop(signal: NodeJS.Signals) {
   spinner.clear();
   console.log("Caught interrupt signal");
   childProcesses.forEach((process) => process.kill(signal));
+  process.exit(130);
 }
 
 // Kills all subprocesses on receiving a kill

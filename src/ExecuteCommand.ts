@@ -37,7 +37,7 @@ export async function executeCommand(
       }
     });
     child.on("close", (code) => {
-      console.log(`child process exited with code ${code}`);
+      console.log(`"${call}" exited with code ${code}`);
       reject();
     });
   });

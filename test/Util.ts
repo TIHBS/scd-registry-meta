@@ -6,22 +6,42 @@ import { ethers, getDefaultProvider, providers, Signer } from "ethers";
 import { Registry } from "../external/decentralised-scd-registry-common/src/wrappers/Registry";
 import { Metadata } from "../external/decentralised-scd-registry-common/src/interfaces/Metadata";
 import { SCD } from "../external/decentralised-scd-registry-common/src/interfaces/SCD";
+import { ChildProcessWithoutNullStreams, spawn } from "child_process";
+import ora from "ora";
+
+export function startRegistry(): ChildProcessWithoutNullStreams {
+  return spawn("npm", ["run", "start:dev"]);
+}
+
+export function stopRegistry(process: ChildProcessWithoutNullStreams) {
+  for (let i = 0; i < 2; i++) {
+    process.kill("SIGINT");
+  }
+}
+
+export function dockerKillAll() {
+  return spawn("docker", ["kill", "$(docker ps -aq)"]);
+}
 
 export async function waitUntilEnvironmentStarted(): Promise<
   [boolean, SystemInfo]
 > {
   let fetched = false;
   let response: SystemInfo;
+  const spinner = ora();
+  spinner.start(" Waiting until the system started...");
   while (!fetched) {
     try {
       response = await (await fetch("http://localhost:7777")).json();
       fetched = true;
     } catch (err) {
-      console.error(err);
       fetched = false;
       await new Promise((resolve) => setTimeout(resolve, 1000));
     }
   }
+  spinner.succeed(" The system started...");
+  spinner.stop();
+  spinner.clear();
   return [fetched, response];
 }
 
@@ -52,4 +72,20 @@ export async function scdToMetadata(scd: SCD, url: string): Promise<Metadata> {
     events: eventNames,
     is_valid: true,
   };
+}
+
+export async function queryExternalSearchProvider(
+  externalSearchProvider: string,
+  query: string,
+  onlyId: boolean = false
+) {
+  const onlyIdString = onlyId ? "true" : "false";
+  const url = `${externalSearchProvider}?onlyId=${onlyIdString}&query=${query}`;
+  const result = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return result.json();
 }
