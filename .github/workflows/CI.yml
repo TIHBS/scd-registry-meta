@@ -16,8 +16,6 @@ jobs:
       - name: Install npm packages
         run: npm install
       - name: "Build containers"
-        run: npm run build-containers
-      - name: "Build the tool"
         run: npm run build
       - name: "Run the tests"
         run: npm test

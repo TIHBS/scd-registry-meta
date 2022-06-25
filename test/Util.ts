@@ -10,7 +10,7 @@ import { ChildProcessWithoutNullStreams, spawn } from "child_process";
 import ora from "ora";
 
 export function startRegistry(): ChildProcessWithoutNullStreams {
-  return spawn("npm", ["run", "start:dev"]);
+  return spawn("npm", ["run", "start"]);
 }
 
 export function stopRegistry(process: ChildProcessWithoutNullStreams) {

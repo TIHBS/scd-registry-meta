@@ -4,13 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/src/main.js",
-    "start:dev": "npx ts-node src/main.ts",
+    "start": "npx ts-node src/main.ts",
     "test": "npx ts-mocha test/**/*.test.ts",
-    "build": "npx tsc",
-    "build-containers": "npx ts-node scripts/build-containers.ts",
-    "prebuild": "npm run clean",
-    "clean": "npx shx rm -rf dist"
+    "build": "npx ts-node scripts/build-containers.ts"
   },
   "repository": {
     "type": "git",
