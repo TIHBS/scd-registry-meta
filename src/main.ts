@@ -91,8 +91,7 @@ async function main() {
 
   const info: SystemInfo = {
     registryAddress: registryAddress,
-    ethereumNetworkUrl: `http://${hostIp}:8545`,
-    ethereumNetworkId: 57771,
+    networkish: `http://${hostIp}:8545`,
     webserverStorage: `http://${hostIp}:49160`,
     externalSearchProvider: `http://${hostIp}:3000`,
     frontendUrl: frontendAddress,
@@ -102,7 +101,7 @@ async function main() {
 
   const environment = {
     REGISTRY_ADDRESS: registryAddress,
-    ETHEREUM_NETWORK_URL: `http://${hostIpDocker}:8545`,
+    NETWORKISH: `http://${hostIpDocker}:8545`,
     ELASTICSEARCH_URL: `http://${hostIpDocker}:9200`,
     SWARM_API: `http://${hostIpDocker}:1633`,
     SWARM_DEBUG: `http://${hostIpDocker}:1635`,

@@ -68,8 +68,7 @@ describe("Integration tests", () => {
   it("should start the system and the system info should contain information", async function () {
     expect(fetched).to.be.true;
 
-    expect(systemInfo.ethereumNetworkId).to.equal(57771);
-    expect(systemInfo.ethereumNetworkUrl).to.equal("http://localhost:8545");
+    expect(systemInfo.networkish).to.equal("http://localhost:8545");
     expect(systemInfo.externalSearchProvider).to.equal("http://localhost:3000");
     expect(systemInfo.swarmAPi).to.equal("http://localhost:1633");
     expect(systemInfo.swarmDebug).to.equal("http://localhost:1635");

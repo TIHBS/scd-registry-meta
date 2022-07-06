@@ -1,7 +1,6 @@
 export interface SystemInfo {
   registryAddress?: string;
-  ethereumNetworkUrl?: string;
-  ethereumNetworkId?: number;
+  networkish?: string;
   frontendUrl?: string;
   webserverStorage?: string;
   externalSearchProvider?: string;
