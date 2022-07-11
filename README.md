@@ -8,7 +8,7 @@ Those submodules are:
 - [scd-registry-contract](https://github.com/GarondEisenfaust/scd-registry-contract)
 - [scd-registry-common](https://github.com/GarondEisenfaust/scd-registry-common)
 - [scd-registry-http-storage](https://github.com/GarondEisenfaust/scd-registry-http-storage)
-- [scd-registry-http-storage](https://github.com/GarondEisenfaust/scd-registry-http-storage)
+- [scd-registry-external-search-provider](https://github.com/GarondEisenfaust/scd-registry-external-search-provider)
 
 Thus, when cloning this repository users should run:
 
