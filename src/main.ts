@@ -7,11 +7,11 @@ import ora from "ora";
 import { SystemInfo } from "./SystemInfo";
 
 const composeFiles = [
-  "external/external-search-provider/docker-compose.yml",
-  "external/http-storage/docker-compose.yml",
+  "external/scd-registry-external-search-provider/docker-compose.yml",
+  "external/scd-registry-http-storage/docker-compose.yml",
 ];
 
-const registryComposeFile = "external/registry-contract/docker-compose.yml";
+const registryComposeFile = "external/scd-registry-contract/docker-compose.yml";
 const frontendComposeFile = "external/scd-registry-frontend/docker-compose.yml";
 
 const childProcesses: child_process.ChildProcess[] = [];

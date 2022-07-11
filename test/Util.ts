@@ -1,7 +1,7 @@
 import { SystemInfo } from "../src/SystemInfo";
 import fetch from "node-fetch";
 import { Registry__factory } from "../external/scd-registry-common/src/wrappers/factories/Registry__factory";
-import testWallets from "../external/registry-contract/src/util/wallets";
+import testWallets from "../external/scd-registry-contract/src/util/wallets";
 import { ethers, getDefaultProvider, providers, Signer } from "ethers";
 import { Registry } from "../external/scd-registry-common/src/wrappers/Registry";
 import { Metadata } from "../external/scd-registry-common/src/interfaces/Metadata";

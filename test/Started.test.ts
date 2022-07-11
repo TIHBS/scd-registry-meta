@@ -8,8 +8,8 @@ import {
   stopRegistry,
   waitUntilEnvironmentStarted,
 } from "./Util";
-import * as scd1 from "../external/http-storage/public/scd1.json";
-import * as scd2 from "../external/http-storage/public/scd2.json";
+import * as scd1 from "../external/scd-registry-http-storage/public/scd1.json";
+import * as scd2 from "../external/scd-registry-http-storage/public/scd2.json";
 import {
   fromContractType,
   toContractType,
