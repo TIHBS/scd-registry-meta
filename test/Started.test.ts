@@ -8,8 +8,8 @@ import {
   stopRegistry,
   waitUntilEnvironmentStarted,
 } from "./Util";
-import * as scd1 from "../external/webserver-storage/public/scd1.json";
-import * as scd2 from "../external/webserver-storage/public/scd2.json";
+import * as scd1 from "../external/http-storage/public/scd1.json";
+import * as scd2 from "../external/http-storage/public/scd2.json";
 import {
   fromContractType,
   toContractType,
@@ -72,7 +72,7 @@ describe("Integration tests", () => {
     expect(systemInfo.externalSearchProvider).to.equal("http://localhost:3000");
     expect(systemInfo.swarmAPi).to.equal("http://localhost:1633");
     expect(systemInfo.swarmDebug).to.equal("http://localhost:1635");
-    expect(systemInfo.webserverStorage).to.equal("http://localhost:49160");
+    expect(systemInfo.httpStorage).to.equal("http://localhost:49160");
 
     {
       // Checks the frontend url
@@ -130,7 +130,7 @@ describe("Integration tests", () => {
 
     it("should fetch scd1 from the webserver storage", async () => {
       const scd = await (
-        await fetch(join(systemInfo.webserverStorage, "scd1.json"))
+        await fetch(join(systemInfo.httpStorage, "scd1.json"))
       ).json();
       expect(scd).to.deep.equal(scd1["default"]);
     });
@@ -170,7 +170,7 @@ describe("Integration tests", () => {
 
     it("should fetch scd2 from the webserver storage", async () => {
       const scd = await (
-        await fetch(join(systemInfo.webserverStorage, "scd2.json"))
+        await fetch(join(systemInfo.httpStorage, "scd2.json"))
       ).json();
       expect(scd).to.deep.equal(scd2["default"]);
     });

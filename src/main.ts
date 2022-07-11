@@ -8,14 +8,11 @@ import { SystemInfo } from "./SystemInfo";
 
 const composeFiles = [
   "external/external-search-provider/docker-compose.yml",
-  "external/webserver-storage/docker-compose.yml",
+  "external/http-storage/docker-compose.yml",
 ];
 
-const registryComposeFile =
-  "external/decentralised-scd-registry/docker-compose.yml";
-
-const frontendComposeFile =
-  "external/decentralised-scd-registry-frontend/docker-compose.yml";
+const registryComposeFile = "external/registry-contract/docker-compose.yml";
+const frontendComposeFile = "external/scd-registry-frontend/docker-compose.yml";
 
 const childProcesses: child_process.ChildProcess[] = [];
 const hostIpDocker = "172.17.0.1";
@@ -92,7 +89,7 @@ async function main() {
   const info: SystemInfo = {
     registryAddress: registryAddress,
     networkish: `http://${hostIp}:8545`,
-    webserverStorage: `http://${hostIp}:49160`,
+    httpStorage: `http://${hostIp}:49160`,
     externalSearchProvider: `http://${hostIp}:3000`,
     frontendUrl: frontendAddress,
     swarmAPi: `http://${hostIp}:1633`,
