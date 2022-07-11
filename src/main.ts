@@ -151,6 +151,8 @@ function stop(signal: NodeJS.Signals) {
   spinner.clear();
   console.log("Caught interrupt signal");
   childProcesses.forEach((process) => process.kill(signal));
+  childProcesses.forEach((process) => process.kill(signal));
+
   process.exit(130);
 }
 
@@ -161,10 +163,12 @@ process.on("SIGTERM", () => stop("SIGTERM"));
 main()
   .then(() => {
     console.log("Killed all subprocesses");
+    childProcesses.forEach((process) => process.kill());
     process.exit(0);
   })
   .catch(() => {
     console.log("Failed to start all processes");
+    childProcesses.forEach((process) => process.kill());
     process.exit(1);
   })
   .finally(() => spinner.clear());
