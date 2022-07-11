@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { SystemInfo } from "./SystemInfo";
-import { capitalizeFirstLetter } from "../external/decentralised-scd-registry-common/src/util/String";
+import { capitalizeFirstLetter } from "../external/scd-registry-common/src/util/String";
 import package_json from "../package.json";
 
 export function createExpressServer(
