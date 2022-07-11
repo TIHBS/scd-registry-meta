@@ -1,0 +1,15 @@
+[submodule "external/scd-registry-common"]
+	path = external/scd-registry-common
+	url = git@github.com:GarondEisenfaust/scd-registry-common.git
+[submodule "external/scd-registry-frontend"]
+	path = external/scd-registry-frontend
+	url = git@github.com:GarondEisenfaust/scd-registry-frontend.git
+[submodule "external/scd-registry-contract"]
+	path = external/scd-registry-contract
+	url = git@github.com:GarondEisenfaust/scd-registry-contract.git
+[submodule "external/scd-registry-http-storage"]
+	path = external/scd-registry-http-storage
+	url = git@github.com:GarondEisenfaust/scd-registry-http-storage.git
+[submodule "external/scd-registry-external-search-provider"]
+	path = external/scd-registry-external-search-provider
+	url = git@github.com:GarondEisenfaust/scd-registry-external-search-provider.git
