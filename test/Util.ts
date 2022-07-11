@@ -1,11 +1,11 @@
 import { SystemInfo } from "../src/SystemInfo";
 import fetch from "node-fetch";
-import { Registry__factory } from "../external/decentralised-scd-registry-common/src/wrappers/factories/Registry__factory";
+import { Registry__factory } from "../external/scd-registry-common/src/wrappers/factories/Registry__factory";
 import testWallets from "../external/registry-contract/src/util/wallets";
 import { ethers, getDefaultProvider, providers, Signer } from "ethers";
-import { Registry } from "../external/decentralised-scd-registry-common/src/wrappers/Registry";
-import { Metadata } from "../external/decentralised-scd-registry-common/src/interfaces/Metadata";
-import { SCD } from "../external/decentralised-scd-registry-common/src/interfaces/SCD";
+import { Registry } from "../external/scd-registry-common/src/wrappers/Registry";
+import { Metadata } from "../external/scd-registry-common/src/interfaces/Metadata";
+import { SCD } from "../external/scd-registry-common/src/interfaces/SCD";
 import { ChildProcessWithoutNullStreams, spawn } from "child_process";
 import ora from "ora";
 

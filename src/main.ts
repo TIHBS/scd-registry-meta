@@ -59,7 +59,7 @@ async function main() {
   const registryAddress = registryContractResult!.line?.substring(
     toWaitFor.length,
     registryContractResult!.line.length
-  );
+  )!;
 
   // Starts the frontend
   let frontendResult: Result;
@@ -67,7 +67,7 @@ async function main() {
   try {
     spinner.start(" Starting the frontend");
     frontendResult = await executeCommand(
-      `docker-compose -f ${frontendComposeFile} up decentralised-scd-registry-swarm`,
+      `docker-compose -f ${frontendComposeFile} up scd-registry-swarm`,
       undefined,
       toWaitForFrontend
     );
@@ -82,7 +82,7 @@ async function main() {
   let frontendAddress = frontendResult!.line?.substring(
     toWaitForFrontend.length,
     frontendResult!.line.length
-  );
+  )!;
   // Replaces the docker host with the host ip
   frontendAddress = frontendAddress?.replace(hostIpDocker, hostIp);
 

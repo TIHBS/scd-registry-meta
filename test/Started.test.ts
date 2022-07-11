@@ -13,13 +13,13 @@ import * as scd2 from "../external/http-storage/public/scd2.json";
 import {
   fromContractType,
   toContractType,
-} from "../external/decentralised-scd-registry-common/src/Conversion";
+} from "../external/scd-registry-common/src/Conversion";
 import {
   SCD,
   SCDWithID,
-} from "../external/decentralised-scd-registry-common/src/interfaces/SCD";
+} from "../external/scd-registry-common/src/interfaces/SCD";
 import { ChildProcessWithoutNullStreams } from "child_process";
-import { Registry } from "../external/decentralised-scd-registry-common/src/wrappers/Registry";
+import { Registry } from "../external/scd-registry-common/src/wrappers/Registry";
 import { join } from "path";
 import fetch from "node-fetch";
 
