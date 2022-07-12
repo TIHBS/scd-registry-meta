@@ -13,7 +13,7 @@ Those submodules are:
 Thus, when cloning this repository users should run:
 
 ```bash
-git clone --recurse-submodules -j8 git@github.com:GarondEisenfaust/scd-registry-meta.git
+git clone --recurse-submodules -j8 https://github.com/TIHBS/scd-registry-meta.git
 ```
 
 Or after cloning, it users should run:
