@@ -7,7 +7,7 @@ import {
   startRegistry,
   stopRegistry,
   waitUntilEnvironmentStarted,
-} from "./Util";
+} from "../src/Util";
 import * as scd1 from "../external/scd-registry-http-storage/public/scd1.json";
 import * as scd2 from "../external/scd-registry-http-storage/public/scd2.json";
 import {
@@ -40,7 +40,7 @@ describe("Integration tests", () => {
     // Store scd1
     {
       const first = await scdToMetadata(
-        scd1 as SCD,
+        scd1 as any as SCD,
         `http://${hostIp}:49160/scd1.json`
       );
       await registry.store(toContractType(first));
@@ -100,7 +100,7 @@ describe("Integration tests", () => {
   describe("SCD1", () => {
     it("should fetch the metadata of scd1.json from the contract", async function () {
       const expected = await scdToMetadata(
-        scd1 as SCD,
+        scd1 as any as SCD,
         `http://${hostIp}:49160/scd1.json`
       );
       const result = fromContractType(

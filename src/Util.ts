@@ -1,4 +1,4 @@
-import { SystemInfo } from "../src/SystemInfo";
+import { SystemInfo } from "./SystemInfo";
 import fetch from "node-fetch";
 import { Registry__factory } from "../external/scd-registry-common/src/wrappers/factories/Registry__factory";
 import testWallets from "../external/scd-registry-contract/src/util/wallets";
@@ -8,6 +8,11 @@ import { Metadata } from "../external/scd-registry-common/src/interfaces/Metadat
 import { SCD } from "../external/scd-registry-common/src/interfaces/SCD";
 import { ChildProcessWithoutNullStreams, spawn } from "child_process";
 import ora from "ora";
+import { toContractType } from "../external/scd-registry-common/src/Conversion";
+
+export async function fetchSystemInfo(): Promise<SystemInfo> {
+  return await (await fetch("http://localhost:7777")).json();
+}
 
 export function startRegistry(): ChildProcessWithoutNullStreams {
   return spawn("npm", ["run", "start"]);
@@ -40,7 +45,7 @@ export async function waitUntilEnvironmentStarted(): Promise<
   spinner.start(" Waiting until the system started...");
   while (!fetched) {
     try {
-      response = await (await fetch("http://localhost:7777")).json();
+      response = await fetchSystemInfo();
       fetched = true;
     } catch (err) {
       fetched = false;
@@ -96,4 +101,10 @@ export async function queryExternalSearchProvider(
     },
   });
   return result.json();
+}
+
+export async function storeMetadata(metadata: Metadata) {
+  const systemInfo = await fetchSystemInfo();
+  const registry = createRegistryContract(systemInfo.registryAddress);
+  await registry.store(toContractType(metadata));
 }
