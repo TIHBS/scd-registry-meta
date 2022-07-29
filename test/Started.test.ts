@@ -16,7 +16,7 @@ import {
 } from "../external/scd-registry-common/src/Conversion";
 import {
   SCD,
-  SCDWithID,
+  SCDWithIDAndMetadata,
 } from "../external/scd-registry-common/src/interfaces/SCD";
 import { ChildProcessWithoutNullStreams } from "child_process";
 import { Registry } from "../external/scd-registry-common/src/wrappers/Registry";
@@ -116,7 +116,9 @@ describe("Integration tests", () => {
         systemInfo.externalSearchProvider,
         scd1.name
       );
-      expect((result[0] as SCDWithID).scd).to.deep.equal(scd1["default"]);
+      expect((result[0] as SCDWithIDAndMetadata).scd).to.deep.equal(
+        scd1["default"]
+      );
     });
 
     it("should fetch the id of scd1.json from the external search provider", async function () {
@@ -156,7 +158,9 @@ describe("Integration tests", () => {
         systemInfo.externalSearchProvider,
         scd2.name
       );
-      expect((result[0] as SCDWithID).scd).to.deep.equal(scd2["default"]);
+      expect((result[0] as SCDWithIDAndMetadata).scd).to.deep.equal(
+        scd2["default"]
+      );
     });
 
     it("should fetch the id of scd2.json from the external search provider", async function () {
